@@ -15,5 +15,5 @@ build:
   - echo "Lets build"
   script:
   #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.booli.se:4567
-  - docker-compose build
+  - docker build .
 #  - docker-compose push
