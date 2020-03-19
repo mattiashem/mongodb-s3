@@ -9,12 +9,11 @@ build:
   only:
   - master
   image: docker:latest
-  when: manual
   services:
   - docker:dind
   before_script:
   - echo "Lets build"
   script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.booli.se:4567
+  #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.booli.se:4567
   - docker-compose build
 #  - docker-compose push
