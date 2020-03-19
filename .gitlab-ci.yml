@@ -11,5 +11,5 @@ build:
   - echo "Lets build and push"
   script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.booli.se:4567
-  - docker build -t git.booli.se:4567/booli/mongodb-s3 .
+  - docker build -t git.booli.se:4567/booli/mongodb-s3:$CI_COMMIT_SHORT_SHA .
   - docker push git.booli.se:4567/booli/mongodb-s3
