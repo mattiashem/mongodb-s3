@@ -8,8 +8,8 @@ build:
   services:
   - docker:dind
   before_script:
-  - echo "Lets build"
+  - echo "Lets build and push"
   script:
   #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.booli.se:4567
-  - docker build .
-#  - docker-compose push
+  - docker build -t git.booli.se:4567/booli/mongodb-s3 .
+  - docker push git.booli.se:4567/booli/mongodb-s3
