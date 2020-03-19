@@ -11,7 +11,6 @@
 
 
 
-
 ############################
 #
 # This will dump the full collection using mongodump
@@ -21,9 +20,16 @@ if [ $ACTION = "MONGODUMP" ]
 then
 
 echo "Exporting mongodb collections"
-mkdir /mongo_out
-mongodump --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/mongo_out/ --forceTableScan
+mkdir /opt/backup/mongo_out
+
+if [ $MONGO_USER = "NONE" ]
+then
+mongodump --db=$MONGO_DB --collection=$MONGO_COL --out=/opt/backup/mongo_out/ --forceTableScan
+
+else
+mongodump --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/opt/backup/mongo_out/ --forceTableScan
 echo "Your data have bean saved to /mongo_out folder"
+fi
 fi
 
 d=`date +%m-%d-%Y`
@@ -37,8 +43,13 @@ if [ $ACTION = "MONGOEXPORT" ]
 then
 
 echo "Exporting mongodb query"
-mkdir /mongo_out
-mongoexport --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/mongo_out/export.json --query $MONGO_QUERY
+mkdir /opt/backup/mongo_out
+if [ $MONGO_USER = "NONE" ]
+then
+mongoexport  --db=$MONGO_DB --collection=$MONGO_COL --out=/opt/backup/mongo_out/export.json --query $MONGO_QUERY
+
+else
+mongoexport --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/opt/backup/mongo_out/export.json --query $MONGO_QUERY
 echo "Your data have bean saved to /mongo_out folder"
 fi
 
