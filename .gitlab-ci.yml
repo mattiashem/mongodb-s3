@@ -1,6 +1,9 @@
-before_script:
-  - docker info
+image: docker:latest
 
-build_image:
+services:
+  - docker:dind
+
+build:
+  stage: build
   script:
     - docker build -t mongodb-s3 .
