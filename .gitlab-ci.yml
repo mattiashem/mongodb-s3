@@ -1,8 +1,5 @@
 image: docker:latest
 
-# add 'node_modules' to cache for speeding up builds
-services:
-  - docker:dind
 
 build:
   only:
