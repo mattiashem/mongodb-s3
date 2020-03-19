@@ -58,4 +58,4 @@ fi
 #
 # This will upload the folder /mongo_out to s3 bucket
 
-aws s3 sync /mongo_out/ s3://$AWS_BUCKET/$d/
+aws s3 sync /opt/backup/mongo_out/ s3://$AWS_BUCKET/$d/
