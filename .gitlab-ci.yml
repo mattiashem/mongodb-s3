@@ -1,9 +1,20 @@
 image: docker:latest
 
-services:
-  - docker:dind
+# add 'node_modules' to cache for speeding up builds
+cache:
+  paths:
+    - node_modules/ # Node modules and dependencies
 
 build:
-  stage: build
+  only:
+  - master
+  image: docker:latest
+  when: manual
+  services:
+  - docker:dind
+  before_script:
+  - echo "Lets build"
   script:
-    - docker build -t mongodb-s3 .
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.booli.se:4567
+  - docker-compose build
+#  - docker-compose push
