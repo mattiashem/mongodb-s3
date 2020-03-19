@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./data:/tmp/data
+    #command: mongoimport -v --file=zips.json -u=root -p=example  --db test --collection id --authenticationDatabase admin
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 9081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  mongoclient:
+    build: .
+    environment:
+      ACTION: MONGODUMP
+      MONGO_HOST: mongo
+      MONGO_USER: root
+      MONGO_PASS: example
+      MONGO_DB: test
+      MONGO_COL: id
+      MONGO_QUERY: '{"city":"HAMPDEN"}'
+      AWS_ACCESS_KEY_ID: 
+      AWS_SECRET_ACCESS_KEY: NSPd
+      AWS_BUCKET: mongo-backup
+    depends_on:
+        - mongo
