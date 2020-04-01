@@ -24,10 +24,10 @@ mkdir /opt/backup/mongo_out
 
 if [ $MONGO_USER = "NONE" ]
 then
-mongodump --db=$MONGO_DB --collection=$MONGO_COL --out=/opt/backup/mongo_out/ --forceTableScan
+mongodump --db=$MONGO_DB --collection=$MONGO_COL --gzip --archive=/opt/backup/mongo_out/$MONGO_COL.gz
 
 else
-mongodump --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/opt/backup/mongo_out/ --forceTableScan
+mongodump --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --gzip --archive=/opt/backup/mongo_out/$MONGO_COL.gz 
 echo "Your data have bean saved to /mongo_out folder"
 fi
 fi
