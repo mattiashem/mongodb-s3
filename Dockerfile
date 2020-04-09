@@ -22,6 +22,8 @@ RUN aws --version
 
 # Add bash scripts
 COPY ./code/* /code/
+RUN mkdir /opt/backup
+
 
 # Start up
 CMD /code/run.sh
