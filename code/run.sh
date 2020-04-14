@@ -47,10 +47,10 @@ mkdir /opt/backup/mongo_out
 if [ $MONGO_USER = "NONE" ]
 then
 
-mongoexport  --db=$MONGO_DB --collection=$MONGO_COL --out=/opt/backup/mongo_out/export.json --query="$MONGO_QUERY"
+mongoexport  --db=$MONGO_DB --collection=$MONGO_COL --out=/opt/backup/mongo_out/$d/$MONGO_DB_$MONGO_COL_export.json --query="$MONGO_QUERY"
 
 else
-mongoexport --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/opt/backup/mongo_out/export.json --query "$MONGO_QUERY"
+mongoexport --host="$MONGO_HOST:27017"  -u=$MONGO_USER -p=$MONGO_PASS  --db=$MONGO_DB --collection=$MONGO_COL --authenticationDatabase admin --out=/opt/backup/mongo_out/$d/$MONGO_DB_$MONGO_COL_export.json --query "$MONGO_QUERY"
 echo "Your data have bean saved to /mongo_out folder"
 fi
 fi
@@ -59,4 +59,4 @@ fi
 #
 # This will upload the folder /mongo_out to s3 bucket
 
-aws s3 sync /opt/backup/mongo_out/ s3://$AWS_BUCKET/$d/
+aws s3 sync /opt/backup/mongo_out/$d/ s3://$AWS_BUCKET/$d/
